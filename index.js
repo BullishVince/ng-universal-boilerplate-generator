@@ -24,5 +24,21 @@ console.log(`- Generating application ⌛`);
 
 //Generate ng-application using the angular CLI
 cp.execSync(`npx -p @angular/cli ng n ${argv.name} --minimal --routing --skip-install --style=scss --force --directory=${argv.output}`);
-console.log(`Application created in ${argv.output}`);
+console.log(`Application created in ${argv.output} ✅`);
+console.log(`Navigating to ${argv.output} 🏃`);
+process.chdir(argv.output);
 
+//Install ng-universal
+console.log(`- Enabling ng-universal (can take a couple of minutes) ⌛`);
+cp.execSync(`npx -p @angular/cli ng add @nguniversal/express-engine --defaults --skip-confirmation`);
+
+// Clean up unnecessary generated stuff here
+
+
+// Setup folder-structure here
+
+
+// Add a shared http-service and a test-api service here
+
+
+// Add some basic routing here
