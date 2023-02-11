@@ -20,17 +20,31 @@ const argv = yargs
     .help()
     .alias('help', 'h').argv
 
-console.log(`- Generating application ⌛`);
+console.log(`- Running the script... 🕙 \n`);
+
+try {
+    console.log(`Navigating to ${argv.output} 🏃`);
+    process.chdir(`${argv.output}`);
+} catch (err) { 
+    console.log(`- Directory doesn't exist. Creating the directory ${argv.output} and navigating to it 🏃`);
+    fs.mkdirSync(argv.output);
+    process.chdir(`${argv.output}`);
+}
 
 //Generate ng-application using the angular CLI
-cp.execSync(`npx -p @angular/cli ng n ${argv.name} --minimal --routing --skip-install --style=scss --force --directory=${argv.output}`);
-console.log(`Application created in ${argv.output} ✅`);
-console.log(`Navigating to ${argv.output} 🏃`);
-process.chdir(argv.output);
+console.log(`\n- Generating application ⌛`);
+cp.execSync(`npx -p @angular/cli ng n ${argv.name} --minimal --routing --skip-install --style=scss --force`);
+console.log(`Application created in ${argv.output}/${argv.name} ✅`);
+
+console.log(`Navigating to project folder, ${argv.name} 🏃`);
+process.chdir(`${argv.name}`);
 
 //Install ng-universal
-console.log(`- Enabling ng-universal (can take a couple of minutes) ⌛`);
-cp.execSync(`npx -p @angular/cli ng add @nguniversal/express-engine --defaults --skip-confirmation`);
+console.log(`\n- Enabling ng-universal (can take a couple of minutes) ⌛`);
+cp.execSync(`npx -p @angular/cli ng add @nguniversal/express-engine@14.2.3 --defaults --skip-confirmation`);
+
+console.log(`Application created successfully 🏁`);
+console.log('Check that nguniversal works by running the following command: npm run prerender');
 
 // Clean up unnecessary generated stuff here
 
